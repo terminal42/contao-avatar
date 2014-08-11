@@ -1,0 +1,92 @@
+.widget_avatar_container .work_container {
+    margin-bottom: 8px;
+}
+
+.widget_avatar_container .links {
+    margin-top: 8px;
+}
+
+.widget_avatar_container .links a {
+	display: inline-block;
+	padding: 5px 12px 5px 13px;
+	border: 1px solid #b8b8b8;
+	border-radius: 3px;
+	color: #666966;
+	cursor: pointer;
+	line-height: 1;
+	text-shadow: 1px 1px 0 #eee;
+	background: #eee;
+	background-image: -moz-linear-gradient(bottom,#ccc 0,#eee 60%);
+	background-image: -webkit-linear-gradient(bottom,#ccc 0,#eee 60%);
+	background-image: -o-linear-gradient(bottom,#ccc 0,#eee 60%);
+	background-image: -ms-linear-gradient(bottom,#ccc 0,#eee 60%);
+	background-image: linear-gradient(bottom,#ccc 0,#eee 60%);
+}
+
+.widget_avatar_container .links a:focus,
+.widget_avatar_container .links a:hover {
+	box-shadow: 0 0 3px #aaa;
+}
+
+.widget_avatar_container .qq-hide {
+	display: none;
+}
+
+.widget_avatar_container .qq-upload-drop-area {
+	padding: 56px 0;
+	margin-bottom: 12px;
+	text-align: center;
+	border: 3px dashed #dbdbdb;
+	border-left: none;
+	border-right: none;
+	background-color: #f7f7f7;
+	/** IE FIXES **/
+	width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.widget_avatar_container .qq-upload-drop-area span {
+	font-size: 16px;
+	color: grey;
+}
+
+.widget_avatar_container .qq-upload-button {
+	display: inline-block;
+	padding: 5px 12px 5px 13px;
+	border: 1px solid #b8b8b8;
+	border-radius: 3px;
+	color: #666966;
+	cursor: pointer;
+	line-height: 1;
+	text-shadow: 1px 1px 0 #eee;
+	background: #eee;
+	background-image: -moz-linear-gradient(bottom,#ccc 0,#eee 60%);
+	background-image: -webkit-linear-gradient(bottom,#ccc 0,#eee 60%);
+	background-image: -o-linear-gradient(bottom,#ccc 0,#eee 60%);
+	background-image: -ms-linear-gradient(bottom,#ccc 0,#eee 60%);
+	background-image: linear-gradient(bottom,#ccc 0,#eee 60%);
+}
+
+.widget_avatar_container .qq-upload-button:focus,
+.widget_avatar_container .qq-upload-button:hover {
+	box-shadow: 0 0 3px #aaa;
+}
+
+.widget_avatar_container .qq-edit-filename {
+	display: none;
+}
+
+.widget_avatar_container .qq-upload-size {
+	color: #b3b3b3;
+}
+
+.widget_avatar_container .qq-upload-list {
+	margin: 8px 0;
+}
+
+.widget_avatar_container .qq-upload-fail {
+	color: #c55;
+}
