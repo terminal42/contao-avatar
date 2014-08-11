@@ -21,5 +21,5 @@ $GLOBALS['TL_LANG']['MSC']['avatar_crop']       = 'Zuschneiden';
 /**
  * Errors
  */
-$GLOBALS['TL_LANG']['ERR']['avatar_width']   = 'Die Datei überschreitet die minimale Breite von %d Pixel!';
-$GLOBALS['TL_LANG']['ERR']['avatar_height']  = 'Die Datei überschreitet die minimale Höhe von %d Pixel!';
+$GLOBALS['TL_LANG']['ERR']['avatar_width']   = 'Die Datei unterschreitet die minimale Breite von %d Pixel!';
+$GLOBALS['TL_LANG']['ERR']['avatar_height']  = 'Die Datei unterschreitet die minimale Höhe von %d Pixel!';
