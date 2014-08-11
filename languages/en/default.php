@@ -15,11 +15,11 @@
 $GLOBALS['TL_LANG']['MSC']['avatar_error']      = 'Unknown error occured.';
 $GLOBALS['TL_LANG']['MSC']['avatar_drop']       = 'Drop files here to upload';
 $GLOBALS['TL_LANG']['MSC']['avatar_upload']     = 'Upload a file';
-$GLOBALS['TL_LANG']['MSC']['avatar_processing'] = 'Processing dropped files...';
+$GLOBALS['TL_LANG']['MSC']['avatar_processing'] = 'Processing dropped files&hellip;';
 $GLOBALS['TL_LANG']['MSC']['avatar_crop']       = 'Crop';
 
 /**
  * Errors
  */
-$GLOBALS['TL_LANG']['ERR']['avatar_width']  = 'File exceeds the minimum image width of %d pixels!';
-$GLOBALS['TL_LANG']['ERR']['avatar_height'] = 'File exceeds the minimum image height of %d pixels!';
+$GLOBALS['TL_LANG']['ERR']['avatar_width']  = 'File height is below the minimum width of %d pixels!';
+$GLOBALS['TL_LANG']['ERR']['avatar_height'] = 'File height is below the minimum height of %d pixels!';
