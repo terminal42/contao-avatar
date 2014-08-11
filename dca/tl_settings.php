@@ -24,7 +24,6 @@ avatar_user_size,avatar_user_thumb,avatar_user_extensions,avatar_user_maxlength,
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_size'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_size'],
-    'default'                 => array(100, 100),
     'inputType'               => 'text',
     'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
@@ -36,7 +35,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_size'] = array
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_thumb'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_thumb'],
-    'default'                 => array(160, 160),
     'inputType'               => 'text',
     'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
@@ -48,7 +46,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_thumb'] = array
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_extensions'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_extensions'],
-    'default'                 => 'jpg,jpeg,gif,png',
     'inputType'               => 'text',
     'eval'                    => array('tl_class'=>'w50'),
     'load_callback' => array
@@ -60,7 +57,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_extensions'] = array
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_maxlength'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_maxlength'],
-    'default'                 => 500000,
     'inputType'               => 'text',
     'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
@@ -79,7 +75,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_placeholder'] = array
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_size'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_size'],
-    'default'                 => array(100, 100),
     'inputType'               => 'text',
     'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
@@ -91,7 +86,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_size'] = array
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_thumb'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_thumb'],
-    'default'                 => array(160, 160),
     'inputType'               => 'text',
     'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
@@ -103,7 +97,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_thumb'] = array
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_extensions'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_extensions'],
-    'default'                 => 'jpg,jpeg,gif,png',
     'inputType'               => 'text',
     'eval'                    => array('tl_class'=>'w50'),
     'load_callback' => array
@@ -115,7 +108,6 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_extensions'] = array
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_maxlength'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_maxlength'],
-    'default'                 => 500000,
     'inputType'               => 'text',
     'eval'                    => array('rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array

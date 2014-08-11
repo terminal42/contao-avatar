@@ -94,6 +94,7 @@ class Avatar
                 list($intWidth, $intHeight) = static::getMemberSize();
             }
 
+            // Do not use $intHeight here as gravatar is always a square
             return '<img src="' . $strFile . '" width="' . $intWidth . '" height="' . $intWidth . '" alt="">';
         }
 
@@ -173,6 +174,7 @@ class Avatar
                 list($intWidth, $intHeight) = static::getUserSize();
             }
 
+            // Do not use $intHeight here as gravatar is always a square
             return '<img src="' . $strFile . '" width="' . $intWidth . '" height="' . $intWidth . '" alt="">';
         }
 
