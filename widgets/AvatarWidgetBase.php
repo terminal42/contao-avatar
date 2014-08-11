@@ -59,9 +59,9 @@ abstract class AvatarWidgetBase extends \Widget
         }
 
         $GLOBALS['TL_JAVASCRIPT']['avatar_fineuploader'] = 'system/modules/avatar/assets/fineuploader/fineuploader-5.0.2.min.js';
-        $GLOBALS['TL_JAVASCRIPT']['avatar_jcrop'] = 'system/modules/avatar/assets/jCrop/js/jquery.Jcrop.min.js';
+        $GLOBALS['TL_JAVASCRIPT']['avatar_jcrop'] = 'system/modules/avatar/assets/Jcrop/js/jquery.Jcrop.min.js';
         $GLOBALS['TL_JAVASCRIPT']['avatar_handler'] = 'system/modules/avatar/assets/handler/handler.min.js';
-        $GLOBALS['TL_CSS']['avatar_jcrop'] = 'system/modules/avatar/assets/jCrop/css/jquery.Jcrop.min.css';
+        $GLOBALS['TL_CSS']['avatar_jcrop'] = 'system/modules/avatar/assets/Jcrop/css/jquery.Jcrop.min.css';
     }
 
     /**
