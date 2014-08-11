@@ -173,7 +173,7 @@ class Avatar
                 list($intWidth, $intHeight) = static::getUserSize();
             }
 
-            return '<img src="' . $strFile . '" width="' . $intWidth . '" height="' . $intWidth . '" alt="">';
+            return '<img src="' . $strFile . '" width="' . $intWidth . '" height="' . $intHeight . '" alt="">';
         }
 
         return \Image::getHtml($strFile);
