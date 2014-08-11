@@ -15,7 +15,7 @@
 $GLOBALS['TL_LANG']['MSC']['avatar_error']      = 'Unknown error occured.';
 $GLOBALS['TL_LANG']['MSC']['avatar_drop']       = 'Drop files here to upload';
 $GLOBALS['TL_LANG']['MSC']['avatar_upload']     = 'Upload a file';
-$GLOBALS['TL_LANG']['MSC']['avatar_processing'] = 'Processing dropped files...';
+$GLOBALS['TL_LANG']['MSC']['avatar_processing'] = 'Processing dropped files&hellip;';
 $GLOBALS['TL_LANG']['MSC']['avatar_crop']       = 'Crop';
 
 /**
