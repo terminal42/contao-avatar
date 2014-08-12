@@ -255,7 +255,7 @@ abstract class AvatarWidgetBase extends \Widget
         $strFolder = $this->strThumbnailPath . '/' . substr(md5($strFile), 0, 1);
 
         if (file_exists(TL_ROOT . '/' . $strFolder . '/' . $strFile)) {
-            $strFile = $this->getFileName(basename($strFile), $strFolder);
+            $strFile = $this->getFileName(basename($strFile), $strFolder); // @todo - basename here?
         }
 
         return $strFolder . '/' . $strFile;
@@ -272,7 +272,39 @@ abstract class AvatarWidgetBase extends \Widget
             return '';
         }
 
-        return \Image::get($strFile, $this->arrThumbSize[0], $this->arrThumbSize[1], 'proportional');
+        list($intWidth, $intHeight) = $this->getThumbnailDimensions($strFile);
+        $strNew = $this->getThumbnailPath($strFile);
+
+        // Copy the file
+        if (\Files::getInstance()->copy($strFile, $strNew)) {
+            $strFile = $strNew;
+        }
+
+        return \Image::get($strFile, $intWidth, $intHeight, 'proportional');
+    }
+
+    /**
+     * Get a thumbnail dimensions as array
+     * @param string
+     * @return array
+     */
+    protected function getThumbnailDimensions($strFile)
+    {
+        if (!is_file(TL_ROOT . '/' . $strFile)) {
+            return array();
+        }
+
+        $intWidth = $this->arrThumbSize[0];
+        $intHeight = $this->arrThumbSize[1];
+        $arrSize = @getimagesize(TL_ROOT . '/' . $strFile);
+
+        // Do not enlarge image
+        if ($arrSize[0] < $intWidth && $arrSize[1] < $intHeight) {
+            $intWidth = $arrSize[0];
+            $intHeight = $arrSize[1];
+        }
+
+        return array($intWidth, $intHeight);
     }
 
     /**
@@ -316,9 +348,10 @@ abstract class AvatarWidgetBase extends \Widget
     protected function cropImage($strFile, $intPositionX, $intPositionY)
     {
         $strThumbnail = $this->getThumbnailPath($strFile);
+        list($intWidth, $intHeight) = $this->getThumbnailDimensions($strFile);
 
         // Resize to thumbnail size first
-        \Image::resize($strFile, $this->arrThumbSize[0], $this->arrThumbSize[1], 'proportional');
+        \Image::resize($strFile, $intWidth, $intHeight, 'proportional');
 
         $arrGdinfo = gd_info();
         $strGdVersion = preg_replace('/[^0-9\.]+/', '', $arrGdinfo['GD Version']);

@@ -45,8 +45,26 @@ class AvatarWidget extends \AvatarWidgetBase
     public function parse($arrAttributes=null)
     {
         if ($this->varValue != '') {
+            $blnTemporaryFile = $this->isTemporaryFile($this->varValue);
+
+            // If the file is temporary but has the exact avatar dimensions
+            // there is no need to crop it just treat it as a ready avatar
+            if ($blnTemporaryFile) {
+                $arrSize = @getimagesize(TL_ROOT . '/' . $this->varValue);
+
+                if ($arrSize[0] == $this->arrAvatarSize[0] && $arrSize[1] == $this->arrAvatarSize[1]) {
+                    $strNew = $this->getThumbnailPath($this->varValue);
+
+                    // Copy the file
+                    if (\Files::getInstance()->rename($this->varValue, $strNew)) {
+                        $this->varValue = $strNew;
+                        $blnTemporaryFile = false;
+                    }
+                }
+            }
+
             // Temporary file
-            if ($this->isTemporaryFile($this->varValue)) {
+            if ($blnTemporaryFile) {
 
                 // Crop the file
                 if (\Input::post('crop') != '') {
@@ -58,6 +76,7 @@ class AvatarWidget extends \AvatarWidgetBase
                     $this->set = $this->varValue;
                     $this->noCrop = true;
                 } else {
+                    // Crop mode
                     $strThumbnail = $this->getThumbnail($this->varValue);
 
                     $this->thumbnail = \Image::getHtml($strThumbnail);
