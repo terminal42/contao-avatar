@@ -1,40 +1,67 @@
 /**
- * fineuploader extension for Contao Open Source CMS
+ * avatar extension for Contao Open Source CMS
  *
  * @copyright  Copyright (c) 2008-2014, terminal42 gmbh
  * @author     terminal42 gmbh <info@terminal42.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html LGPL
- * @link       http://github.com/terminal42/contao-fineuploader
+ * @link       http://github.com/terminal42/contao-avatar
  */
 
-;var ContaoFineUploader = {};
+jQuery.noConflict();
 
-(function() {
+;(function($) {
     "use strict";
 
     /**
+     * Default config
+     */
+    var config = {
+        backend: false
+    };
+
+    /**
+     * Widget
+     * @var object
+     */
+    var widget;
+
+    /**
+     * Field
+     * @var object
+     */
+    var field;
+
+    /**
+     * Uploader
+     * @var object
+     */
+    var uploader;
+
+    /**
      * Current value
+     * @var string
      */
     var current_value = '';
 
     /**
-     * Initialize the uploader
-     * @param object
-     * @param object
-     * @param object
-     * @return object
+     * Backend mode
+     * @var boolean
      */
-    ContaoFineUploader.init = function(el, config, options) {
-        current_value = document.getElementById('ctrl_' + config.field).value;
+    var backend_mode = false;
 
-        var params = {
-            element: el,
-            debug: true,
+    /**
+     * Initialize the uploader
+     */
+    var initUploader = function() {
+        uploader = new qq.FineUploader({
+            element: widget.find('.upload_container')[0],
+            debug: false,
+            multiple: false,
             request: {
                 endpoint: window.location.href,
-                inputName: config.field + '_fineuploader',
+                inputName: config.field + '_upload',
                 params: {
-                    action: 'fineuploader_upload',
+                    action: 'avatar_upload',
                     name: config.field,
                     REQUEST_TOKEN: config.request_token
                 }
@@ -48,115 +75,162 @@
                 allowedExtensions: config.extensions,
                 sizeLimit: config.sizeLimit
             },
+            text: {
+                formatProgress: config.labels.text.formatProgress,
+                failUpload: config.labels.text.failUpload,
+                waitingForResponse: config.labels.text.waitingForResponse,
+                paused: config.labels.text.paused,
+            },
+            messages: {
+                tooManyFilesError: config.labels.messages.tooManyFilesError,
+                unsupportedBrowser: config.labels.messages.unsupportedBrowser,
+            },
+            retry: {
+                autoRetryNote: config.labels.retry.autoRetryNote,
+            },
+            deleteFile: {
+                confirmMessage: config.labels.deleteFile.confirmMessage,
+                deletingStatusText: config.labels.deleteFile.deletingStatusText,
+                deletingFailedText: config.labels.deleteFile.deletingFailedText,
+            },
+            paste: {
+                namePromptMessage: config.labels.paste.namePromptMessage,
+            },
             callbacks: {
-                onValidateBatch: function(files) {
-                    var count = (current_value == '') ? 0 : current_value.split(',').length;
-
-                    if (config.limit > 0 && config.limit < (count + files.length)) {
-                        this._batchError(this._options.messages.tooManyItemsError.replace(/\{netItems\}/g, count + files.length).replace(/\{itemLimit\}/g, config.limit));
-                        return false;
-                    }
-                },
                 onUpload: function() {
-                    if (config.backend) {
+                    if (backend_mode) {
                         AjaxRequest.displayBox(Contao.lang.loading + ' …')
                     }
                 },
                 onComplete: function(id, name, result) {
                     if (!result.success) {
-                        if (config.backend) {
+                        if (backend_mode) {
                             AjaxRequest.hideBox();
                         }
 
                         return;
                     }
 
-                    // Add the uploaded file to value
-                    if (result.file) {
-                        current_value = (current_value.length ? (current_value + ',') : '') + result.file;
-                    }
+                    current_value = result.file;
 
-                    if (this.getInProgress() > 0) {
-                        return;
-                    }
-
-                    if (config.backend) {
-                        new Request.Contao({
-                            field: document.getElementById('ctrl_' + config.field),
-                            evalScripts: false,
-                            onSuccess: function(txt, json) {
-                                document.getElementById('ctrl_' + config.field).getParent('div').set('html', json.content);
-                                json.javascript && Browser.exec(json.javascript);
+                    $.ajax({
+                        url: window.location.href,
+                        data: {
+                            'action': 'avatar_reload',
+                            'name': config.field,
+                            'value': current_value,
+                            'REQUEST_TOKEN': config.request_token
+                        },
+                        type: 'POST',
+                        complete: function(r) {
+                            if (backend_mode) {
                                 AjaxRequest.hideBox();
                                 window.fireEvent('ajax_change');
                             }
-                        }).post({'action':'fineuploader_reload', 'name':config.field, 'value':current_value, 'REQUEST_TOKEN':config.request_token});
-                    } else {
-                        document.getElementById('ctrl_' + config.field).value = current_value;
-                    }
+                        },
+                        success: function(r) {
+                            widget.find('.ajax_container').html(r);
+                            initCrop();
+                            initRemove();
+                        }
+                    });
                 }
             }
-        };
-
-        // Merge the params
-        for (var i in options) {
-            params[i] = options[i];
-        }
-
-        return new qq.FineUploader(params);
+        });
     };
 
     /**
-     * Delete the item
-     * @param object
-     * @param string
+     * Initialize the crop
      */
-    ContaoFineUploader.deleteItem = function(el, field) {
-        var item = el.parentNode;
-        var value = item.getAttribute('data-id');
-        removeValueFromField(document.getElementById('ctrl_' + field), value);
-        item.parentNode.removeChild(item);
-    };
+    var initCrop = function() {
+        var crop_api;
 
-    /**
-     * Make items sortable
-     * @param string
-     * @param string
-     */
-    ContaoFineUploader.makeSortable = function(id, oid) {
-        var i;
-        var list = new Sortables(document.getElementById(id), {
-            contstrain: true,
-            opacity: 0.6
-        }).addEvent('complete', function() {
-            var els = [],
-                lis = document.getElementById(id).getChildren('li');
-            for (i=0; i<lis.length; i++) {
-                els.push(lis[i].get('data-id'));
-            }
-            document.getElementById(oid).value = els.join(',');
+        widget.find('.thumbnail').Jcrop({
+            allowResize: false,
+            allowSelect: false,
+            setSelect: [0, 0, config.avatarSize[0], config.avatarSize[1]]
+        }, function() {
+            crop_api = this;
         });
 
-        list.fireEvent("complete"); // Initial sorting
+        widget.find('.crop_link').on('click', function(e) {
+            e.preventDefault();
+            var coordinates = crop_api.tellSelect();
+
+            $.ajax({
+                url: window.location.href,
+                data: {
+                    'action': 'avatar_reload',
+                    'name': config.field,
+                    'value': current_value,
+                    'crop': coordinates.x + ',' + coordinates.y,
+                    'REQUEST_TOKEN': config.request_token
+                },
+                type: 'POST',
+                beforeSend: function() {
+                    if (backend_mode) {
+                        AjaxRequest.displayBox(Contao.lang.loading + ' …')
+                    }
+                },
+                complete: function(r) {
+                    if (backend_mode) {
+                        AjaxRequest.hideBox();
+                        window.fireEvent('ajax_change');
+                    }
+                },
+                success: function(r) {
+                    widget.find('.ajax_container').html(r);
+                    initRemove();
+                }
+            });
+        });
     };
 
     /**
-     * Remove the value from field
-     * @param object
-     * @param string
+     * Initialize the remove link
      */
-    var removeValueFromField = function(el, value) {
-        var current = el.value.split(',');
-        var i;
+    var initRemove = function() {
+        widget.find('.delete_link').on('click', function(e) {
+            e.preventDefault();
+            remove();
+        });
+    };
 
-        for (i=0; i<current.length; i++) {
-            if (current[i] == value) {
-                current.splice(i, 1);
-                break;
-            }
+    /**
+     * Remove the value
+     */
+    var remove = function() {
+        field.val('');
+        widget.find('.work_container').html('');
+    };
+
+    /**
+     * Initialize the plugin
+     * @param object
+     */
+    $.fn.Avatar = function(options) {
+        $.extend(config, options);
+        widget = $(this);
+
+        // Initialize the uploader
+        initUploader();
+
+        // Set the field
+        field = $('#ctrl_' + config.field);
+
+        // Backend mode
+        if (config.backend) {
+            backend_mode = true;
         }
 
-        current_value = current.join(',');
-        el.value = current_value;
+        // Set the current value
+        current_value = field.val();
+
+        // Initialize the remove link
+        if (current_value != '') {
+            initRemove();
+        }
+
+        return this;
     };
-})();
+})(jQuery);

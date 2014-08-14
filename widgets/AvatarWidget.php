@@ -45,8 +45,26 @@ class AvatarWidget extends \AvatarWidgetBase
     public function parse($arrAttributes=null)
     {
         if ($this->varValue != '') {
+            $blnTemporaryFile = $this->isTemporaryFile($this->varValue);
+
+            // If the file is temporary but has the exact avatar dimensions
+            // there is no need to crop it just treat it as a ready avatar
+            if ($blnTemporaryFile) {
+                $arrSize = @getimagesize(TL_ROOT . '/' . $this->varValue);
+
+                if ($arrSize[0] == $this->arrAvatarSize[0] && $arrSize[1] == $this->arrAvatarSize[1]) {
+                    $strNew = $this->getThumbnailPath($this->varValue);
+
+                    // Copy the file
+                    if (\Files::getInstance()->rename($this->varValue, $strNew)) {
+                        $this->varValue = $strNew;
+                        $blnTemporaryFile = false;
+                    }
+                }
+            }
+
             // Temporary file
-            if ($this->isTemporaryFile($this->varValue)) {
+            if ($blnTemporaryFile) {
 
                 // Crop the file
                 if (\Input::post('crop') != '') {
@@ -58,6 +76,7 @@ class AvatarWidget extends \AvatarWidgetBase
                     $this->set = $this->varValue;
                     $this->noCrop = true;
                 } else {
+                    // Crop mode
                     $strThumbnail = $this->getThumbnail($this->varValue);
 
                     $this->thumbnail = \Image::getHtml($strThumbnail);
@@ -78,6 +97,36 @@ class AvatarWidget extends \AvatarWidgetBase
         $this->extensions = json_encode(trimsplit(',', $this->getAllowedExtensions()));
         $this->sizeLimit = $this->getMaximumFileSize();
         $this->avatarSize = json_encode($this->arrAvatarSize);
+
+        $this->texts = json_encode(array
+        (
+            'text' => array
+            (
+                'formatProgress' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_formatProgress'],
+                'failUpload' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_failUpload'],
+                'waitingForResponse' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_waitingForResponse'],
+                'paused' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_paused'],
+            ),
+            'messages' => array
+            (
+                'tooManyFilesError' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_tooManyFilesError'],
+                'unsupportedBrowser' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_unsupportedBrowser'],
+            ),
+            'retry' => array
+            (
+                'autoRetryNote' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_autoRetryNote'],
+            ),
+            'deleteFile' => array
+            (
+                'confirmMessage' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_confirmMessage'],
+                'deletingStatusText' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_deletingStatusText'],
+                'deletingFailedText' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_deletingFailedText'],
+            ),
+            'paste' => array
+            (
+                'namePromptMessage' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_namePromptMessage'],
+            ),
+        ));
 
         $this->labels = array
         (
