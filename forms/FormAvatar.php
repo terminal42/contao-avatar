@@ -94,51 +94,101 @@ class FormAvatar extends \AvatarWidgetBase
      */
     public function parse($arrAttributes=null)
     {
-        if (!$this->blnValuesPrepared) {
-            if ($this->varValue != '') {
-                // Temporary file
-                if ($this->isTemporaryFile($this->varValue)) {
+        if ($this->blnValuesPrepared) {
+            return parent::parse($arrAttributes);
+        }
 
-                    // Crop the file
-                    if (\Input::post('crop') != '') {
-                        list($intPositionX, $intPositionY) = explode(',', \Input::post('crop'));
-                        $this->varValue = $this->cropImage($this->varValue, $intPositionX, $intPositionY);
+        if ($this->varValue != '') {
+            $blnTemporaryFile = $this->isTemporaryFile($this->varValue);
 
-                        $this->thumbnail = \Image::getHtml($this->varValue);
-                        $this->imgSize = @getimagesize(TL_ROOT . '/' . $this->varValue);
-                        $this->set = $this->varValue;
-                        $this->noCrop = true;
-                    } else {
-                        $strThumbnail = $this->getThumbnail($this->varValue);
+            // If the file is temporary but has the exact avatar dimensions
+            // there is no need to crop it just treat it as a ready avatar
+            if ($blnTemporaryFile) {
+                $arrSize = @getimagesize(TL_ROOT . '/' . $this->varValue);
 
-                        $this->thumbnail = \Image::getHtml($strThumbnail);
-                        $this->imgSize = @getimagesize(TL_ROOT . '/' . $strThumbnail);
+                if ($arrSize[0] == $this->arrAvatarSize[0] && $arrSize[1] == $this->arrAvatarSize[1]) {
+                    $strNew = $this->getThumbnailPath($this->varValue);
+
+                    // Copy the file
+                    if (\Files::getInstance()->rename($this->varValue, $strNew)) {
+                        $this->varValue = $strNew;
+                        $blnTemporaryFile = false;
                     }
-                } else {
-                    // Avatar
-                    $this->avatar = \Image::getHtml(\Image::get($this->varValue, $this->arrAvatarSize[0], $this->arrAvatarSize[1], 'center_center'));
-                    $this->set = $this->varValue;
                 }
             }
 
-            $this->ajax = \Environment::get('isAjaxRequest');
-            $this->delete = $GLOBALS['TL_LANG']['MSC']['delete'];
-            $this->deleteTitle = specialchars($GLOBALS['TL_LANG']['MSC']['delete']);
-            $this->crop = $GLOBALS['TL_LANG']['MSC']['avatar_crop'];
-            $this->cropTitle = specialchars($GLOBALS['TL_LANG']['MSC']['avatar_crop']);
-            $this->extensions = json_encode(trimsplit(',', $this->getAllowedExtensions()));
-            $this->sizeLimit = $this->getMaximumFileSize();
-            $this->avatarSize = json_encode($this->arrAvatarSize);
+            // Temporary file
+            if ($blnTemporaryFile) {
 
-            $this->labels = array
-            (
-                'drop' => $GLOBALS['TL_LANG']['MSC']['avatar_drop'],
-                'upload' => $GLOBALS['TL_LANG']['MSC']['avatar_upload'],
-                'processing' => $GLOBALS['TL_LANG']['MSC']['avatar_processing'],
-            );
+                // Crop the file
+                if (\Input::post('crop') != '') {
+                    list($intPositionX, $intPositionY) = explode(',', \Input::post('crop'));
+                    $this->varValue = $this->cropImage($this->varValue, $intPositionX, $intPositionY);
 
-            $this->blnValuesPrepared = true;
+                    $this->thumbnail = \Image::getHtml($this->varValue);
+                    $this->imgSize = @getimagesize(TL_ROOT . '/' . $this->varValue);
+                    $this->set = $this->varValue;
+                    $this->noCrop = true;
+                } else {
+                    $strThumbnail = $this->getThumbnail($this->varValue);
+
+                    $this->thumbnail = \Image::getHtml($strThumbnail);
+                    $this->imgSize = @getimagesize(TL_ROOT . '/' . $strThumbnail);
+                }
+            } else {
+                // Avatar
+                $this->avatar = \Image::getHtml(\Image::get($this->varValue, $this->arrAvatarSize[0], $this->arrAvatarSize[1], 'center_center'));
+                $this->set = $this->varValue;
+            }
         }
+
+        $this->ajax = \Environment::get('isAjaxRequest');
+        $this->delete = $GLOBALS['TL_LANG']['MSC']['delete'];
+        $this->deleteTitle = specialchars($GLOBALS['TL_LANG']['MSC']['delete']);
+        $this->crop = $GLOBALS['TL_LANG']['MSC']['avatar_crop'];
+        $this->cropTitle = specialchars($GLOBALS['TL_LANG']['MSC']['avatar_crop']);
+        $this->extensions = json_encode(trimsplit(',', $this->getAllowedExtensions()));
+        $this->sizeLimit = $this->getMaximumFileSize();
+        $this->avatarSize = json_encode($this->arrAvatarSize);
+
+        $this->texts = json_encode(array
+        (
+            'text' => array
+            (
+                'formatProgress' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_formatProgress'],
+                'failUpload' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_failUpload'],
+                'waitingForResponse' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_waitingForResponse'],
+                'paused' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_paused'],
+            ),
+            'messages' => array
+            (
+                'tooManyFilesError' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_tooManyFilesError'],
+                'unsupportedBrowser' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_unsupportedBrowser'],
+            ),
+            'retry' => array
+            (
+                'autoRetryNote' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_autoRetryNote'],
+            ),
+            'deleteFile' => array
+            (
+                'confirmMessage' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_confirmMessage'],
+                'deletingStatusText' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_deletingStatusText'],
+                'deletingFailedText' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_deletingFailedText'],
+            ),
+            'paste' => array
+            (
+                'namePromptMessage' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_namePromptMessage'],
+            ),
+        ));
+
+        $this->labels = array
+        (
+            'drop' => $GLOBALS['TL_LANG']['MSC']['avatar_drop'],
+            'upload' => $GLOBALS['TL_LANG']['MSC']['avatar_upload'],
+            'processing' => $GLOBALS['TL_LANG']['MSC']['avatar_processing'],
+        );
+
+        $this->blnValuesPrepared = true;
 
         return parent::parse($arrAttributes);
     }
