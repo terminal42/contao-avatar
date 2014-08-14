@@ -98,6 +98,36 @@ class AvatarWidget extends \AvatarWidgetBase
         $this->sizeLimit = $this->getMaximumFileSize();
         $this->avatarSize = json_encode($this->arrAvatarSize);
 
+        $this->texts = json_encode(array
+        (
+            'text' => array
+            (
+                'formatProgress' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_formatProgress'],
+                'failUpload' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_failUpload'],
+                'waitingForResponse' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_waitingForResponse'],
+                'paused' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_paused'],
+            ),
+            'messages' => array
+            (
+                'tooManyFilesError' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_tooManyFilesError'],
+                'unsupportedBrowser' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_unsupportedBrowser'],
+            ),
+            'retry' => array
+            (
+                'autoRetryNote' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_autoRetryNote'],
+            ),
+            'deleteFile' => array
+            (
+                'confirmMessage' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_confirmMessage'],
+                'deletingStatusText' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_deletingStatusText'],
+                'deletingFailedText' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_deletingFailedText'],
+            ),
+            'paste' => array
+            (
+                'namePromptMessage' => $GLOBALS['TL_LANG']['MSC']['avatar_fineuploader_namePromptMessage'],
+            ),
+        ));
+
         $this->labels = array
         (
             'drop' => $GLOBALS['TL_LANG']['MSC']['avatar_drop'],

@@ -72,7 +72,8 @@
                 backend: false,
                 extensions: <?php echo $this->extensions; ?>,
                 sizeLimit: <?php echo $this->sizeLimit; ?>,
-                avatarSize: <?php echo $this->avatarSize; ?>
+                avatarSize: <?php echo $this->avatarSize; ?>,
+                labels: <?php echo $this->texts; ?>
             });
         });
     })(jQuery);
