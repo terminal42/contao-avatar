@@ -23,7 +23,7 @@ $GLOBALS['TL_LANG']['tl_settings']['avatar_user_thumb']         = array('Benutze
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_extensions']    = array('Benutzer - erlaubte Dateitypen', 'Bitte geben Sie eine kommaseparierte Liste von erlaubten Dateitypen ein.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_maxlength']     = array('Benutzer - maximale Dateigrösse', 'Bitte geben Sie die maximale Dateigrösse in Bytes ein.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_placeholder']   = array('Benutzer - Platzhalter', 'Hier können Sie einen Platzhalter definieren.');
-$GLOBALS['TL_LANG']['tl_settings']['avatar_member_autoresize']  = array('Benutzer - Avatar Auto-Resize', 'Den Avatar automatisch auf die definierte Größe verkleinern.');
+$GLOBALS['TL_LANG']['tl_settings']['avatar_user_autoresize']    = array('Benutzer - Avatar Auto-Resize', 'Den Avatar automatisch auf die definierte Größe verkleinern.');
 
 /**
  * Legends

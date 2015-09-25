@@ -76,7 +76,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_autoresize'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_autoresize'],
     'inputType'               => 'checkbox',
-    'eval'                    => array('tl_class'=>'w50 m12'),
+    'eval'                    => array('tl_class'=>'clr w50 m12'),
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_size'] = array
@@ -134,5 +134,5 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_autoresize'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_autoresize'],
     'inputType'               => 'checkbox',
-    'eval'                    => array('tl_class'=>'w50 m12'),
+    'eval'                    => array('tl_class'=>'clr w50 m12'),
 );
