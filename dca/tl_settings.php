@@ -69,14 +69,14 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_placeholder'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_placeholder'],
     'inputType'               => 'fileTree',
-    'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'long'),
+    'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'clr'),
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_autoresize'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_autoresize'],
     'inputType'               => 'checkbox',
-    'eval'                    => array('tl_class'=>'clr w50 m12'),
+    'eval'                    => array('tl_class'=>'clr m12'),
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_size'] = array
@@ -127,12 +127,12 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_placeholder'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_placeholder'],
     'inputType'               => 'fileTree',
-    'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'long'),
+    'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'clr'),
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_autoresize'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_autoresize'],
     'inputType'               => 'checkbox',
-    'eval'                    => array('tl_class'=>'clr w50 m12'),
+    'eval'                    => array('tl_class'=>'clr m12'),
 );
