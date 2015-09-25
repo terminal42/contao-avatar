@@ -69,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_placeholder'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_placeholder'],
     'inputType'               => 'fileTree',
-    'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'w50'),
+    'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'long'),
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_autoresize'] = array
@@ -127,7 +127,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_placeholder'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_placeholder'],
     'inputType'               => 'fileTree',
-    'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'w50'),
+    'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'long'),
 );
 
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_autoresize'] = array
