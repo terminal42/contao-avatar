@@ -83,7 +83,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_size'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_size'],
     'inputType'               => 'text',
-    'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
+    'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'clr w50'),
     'load_callback' => array
     (
         array('Avatar', 'loadDefaultValue')
