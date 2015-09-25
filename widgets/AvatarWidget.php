@@ -63,6 +63,18 @@ class AvatarWidget extends \AvatarWidgetBase
                 }
             }
 
+            if($blnTemporaryFile && \Config::get('avatar_user_autoresize')) {
+                $strNew = $this->getThumbnailPath($this->varValue);
+
+                $this->varValue = \Image::get($this->varValue, $this->arrAvatarSize[0], $this->arrAvatarSize[1], 'center_center');
+
+                // Copy the file
+                if (\Files::getInstance()->rename($this->varValue, $strNew)) {
+                    $this->varValue = $strNew;
+                    $blnTemporaryFile = false;
+                }
+            }
+
             // Temporary file
             if ($blnTemporaryFile) {
 

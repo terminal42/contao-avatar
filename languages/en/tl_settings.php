@@ -17,11 +17,13 @@ $GLOBALS['TL_LANG']['tl_settings']['avatar_member_thumb']       = array('Member 
 $GLOBALS['TL_LANG']['tl_settings']['avatar_member_extensions']  = array('Member - allowed file types', 'Please enter the allow file types.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_member_maxlength']   = array('Member - maximum file size', 'Please enter the maximum file size in bytes.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_member_placeholder'] = array('Member - placeholder', 'Here you can choose a placeholder for the avatar.');
+$GLOBALS['TL_LANG']['tl_settings']['avatar_member_autoresize']  = array('Member - avatar auto-resize', 'Resize the avatar automatically to the defined dimensions.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_size']          = array('User - avatar size', 'Please enter the avatar size in pixels.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_thumb']         = array('User - thumbnail size', 'Please enter the thumbnail size in pixels.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_extensions']    = array('User - allowed file types', 'Please enter the allow file types.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_maxlength']     = array('User - maximum file size', 'Please enter the maximum file size in bytes.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_placeholder']   = array('User - placeholder', 'Here you can choose a placeholder for the avatar.');
+$GLOBALS['TL_LANG']['tl_settings']['avatar_user_autoresize']    = array('User - avatar auto-resize', 'Resize the avatar automatically to the defined dimensions.');
 
 /**
  * Legends
