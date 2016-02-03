@@ -25,7 +25,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_size'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_size'],
     'inputType'               => 'text',
-    'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
+    'eval'                    => array('mandatory'=>true, 'multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
     (
         array('Avatar', 'loadDefaultValue')
@@ -36,7 +36,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_thumb'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_thumb'],
     'inputType'               => 'text',
-    'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
+    'eval'                    => array('mandatory'=>true, 'multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
     (
         array('Avatar', 'loadDefaultValue')
@@ -76,7 +76,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_size'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_size'],
     'inputType'               => 'text',
-    'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
+    'eval'                    => array('mandatory'=>true, 'multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
     (
         array('Avatar', 'loadDefaultValue')
@@ -87,7 +87,7 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_thumb'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_thumb'],
     'inputType'               => 'text',
-    'eval'                    => array('multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
+    'eval'                    => array('mandatory'=>true, 'multiple'=>true, 'size'=>2, 'rgxp'=>'digit', 'tl_class'=>'w50'),
     'load_callback' => array
     (
         array('Avatar', 'loadDefaultValue')
