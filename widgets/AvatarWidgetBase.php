@@ -254,6 +254,9 @@ abstract class AvatarWidgetBase extends \Widget
         $strFile = basename($strFile);
         $strFolder = $this->strThumbnailPath . '/' . substr(md5($strFile), 0, 1);
 
+        // Make sure the folder exists
+        new \Folder($strFolder);
+
         if (file_exists(TL_ROOT . '/' . $strFolder . '/' . $strFile)) {
             $strFile = $this->getFileName(basename($strFile), $strFolder); // @todo - basename here?
         }
