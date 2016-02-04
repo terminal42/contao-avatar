@@ -55,7 +55,11 @@ abstract class AvatarWidgetBase extends \Widget
 
         // Include the jQuery
         if ($this->addJQuery) {
-            $GLOBALS['TL_JAVASCRIPT']['jquery'] = 'assets/jquery/js/jquery.min.js';
+            if (defined('JQUERY')) {
+                $GLOBALS['TL_JAVASCRIPT']['jquery'] = 'assets/jquery/core/' . JQUERY . '/jquery.min.js';
+            } else {
+                $GLOBALS['TL_JAVASCRIPT']['jquery'] = 'assets/jquery/js/jquery.min.js';
+            }
         }
 
         $GLOBALS['TL_JAVASCRIPT']['avatar_fineuploader'] = 'system/modules/avatar/assets/fineuploader/fineuploader-5.0.2.min.js';
