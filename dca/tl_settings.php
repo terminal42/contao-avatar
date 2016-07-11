@@ -15,8 +15,8 @@
 $GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] = str_replace('gdMaxImgHeight;', 'gdMaxImgHeight;
 {avatar_legend:hide},
 avatar_member_size,avatar_member_thumb,avatar_member_extensions,avatar_member_maxlength,avatar_member_placeholder,
-avatar_user_size,avatar_user_thumb,avatar_user_extensions,avatar_user_maxlength,avatar_user_placeholder;
-', $GLOBALS['TL_DCA']['tl_settings']['palettes']['default']);
+avatar_member_autoresize,avatar_user_size,avatar_user_thumb,avatar_user_extensions,avatar_user_maxlength,
+avatar_user_placeholder,avatar_user_autoresize;', $GLOBALS['TL_DCA']['tl_settings']['palettes']['default']);
 
 /**
  * Add fields to tl_settings
@@ -72,6 +72,13 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_placeholder'] = array
     'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'clr'),
 );
 
+$GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_member_autoresize'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_member_autoresize'],
+    'inputType'               => 'checkbox',
+    'eval'                    => array('tl_class'=>'clr m12'),
+);
+
 $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_size'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_size'],
@@ -121,4 +128,11 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_placeholder'] = array
     'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_placeholder'],
     'inputType'               => 'fileTree',
     'eval'                    => array('files'=>true, 'filesOnly'=>true, 'fieldType'=>'radio', 'extensions'=>$GLOBALS['TL_CONFIG']['validImageTypes'], 'tl_class'=>'clr'),
+);
+
+$GLOBALS['TL_DCA']['tl_settings']['fields']['avatar_user_autoresize'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_settings']['avatar_user_autoresize'],
+    'inputType'               => 'checkbox',
+    'eval'                    => array('tl_class'=>'clr m12'),
 );

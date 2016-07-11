@@ -17,11 +17,13 @@ $GLOBALS['TL_LANG']['tl_settings']['avatar_member_thumb']       = array('Mitglie
 $GLOBALS['TL_LANG']['tl_settings']['avatar_member_extensions']  = array('Mitglied - erlaubte Dateitypen', 'Bitte geben Sie eine kommaseparierte Liste von erlaubten Dateitypen ein.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_member_maxlength']   = array('Mitglied - maximale Dateigrösse', 'Bitte geben Sie die maximale Dateigrösse in Bytes ein.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_member_placeholder'] = array('Mitglied - Platzhalter', 'Hier können Sie einen Platzhalter definieren.');
+$GLOBALS['TL_LANG']['tl_settings']['avatar_member_autoresize']  = array('Mitglied - Avatar Auto-Resize', 'Den Avatar automatisch auf die definierte Größe verkleinern.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_size']          = array('Benutzer - Avatargrösse', 'Bitte geben Sie die Avatargrösse in Pixel ein.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_thumb']         = array('Benutzer - Vorschaubildgrösse', 'Bitte geben Sie die Vorschaubildgrösse in Pixel ein.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_extensions']    = array('Benutzer - erlaubte Dateitypen', 'Bitte geben Sie eine kommaseparierte Liste von erlaubten Dateitypen ein.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_maxlength']     = array('Benutzer - maximale Dateigrösse', 'Bitte geben Sie die maximale Dateigrösse in Bytes ein.');
 $GLOBALS['TL_LANG']['tl_settings']['avatar_user_placeholder']   = array('Benutzer - Platzhalter', 'Hier können Sie einen Platzhalter definieren.');
+$GLOBALS['TL_LANG']['tl_settings']['avatar_user_autoresize']    = array('Benutzer - Avatar Auto-Resize', 'Den Avatar automatisch auf die definierte Größe verkleinern.');
 
 /**
  * Legends
