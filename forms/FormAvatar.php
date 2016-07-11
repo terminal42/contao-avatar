@@ -101,31 +101,35 @@ class FormAvatar extends \AvatarWidgetBase
         if ($this->varValue != '') {
             $blnTemporaryFile = $this->isTemporaryFile($this->varValue);
 
-            // If the file is temporary but has the exact avatar dimensions
-            // there is no need to crop it just treat it as a ready avatar
             if ($blnTemporaryFile) {
-                $arrSize = @getimagesize(TL_ROOT . '/' . $this->varValue);
+                $strNew = $this->getThumbnailPath($this->varValue);
 
-                if ($arrSize[0] == $this->arrAvatarSize[0] && $arrSize[1] == $this->arrAvatarSize[1]) {
-                    $strNew = $this->getThumbnailPath($this->varValue);
+                // Auto-resize the member avatar
+                if (\Config::get('avatar_member_autoresize')) {
+                    $this->varValue = \Image::get(
+                        $this->varValue,
+                        $this->arrAvatarSize[0],
+                        $this->arrAvatarSize[1],
+                        'center_center'
+                    );
 
                     // Copy the file
                     if (\Files::getInstance()->rename($this->varValue, $strNew)) {
-                        $this->varValue = $strNew;
+                        $this->varValue   = $strNew;
                         $blnTemporaryFile = false;
                     }
-                }
-            }
+                } else {
+                    // If the file is temporary but has the exact avatar dimensions
+                    // there is no need to crop it just treat it as a ready avatar
+                    $arrSize = @getimagesize(TL_ROOT.'/'.$this->varValue);
 
-            if($blnTemporaryFile && \Config::get('avatar_member_autoresize')) {
-                $strNew = $this->getThumbnailPath($this->varValue);
-
-                $this->varValue = \Image::get($this->varValue, $this->arrAvatarSize[0], $this->arrAvatarSize[1], 'center_center');
-
-                // Copy the file
-                if (\Files::getInstance()->rename($this->varValue, $strNew)) {
-                    $this->varValue = $strNew;
-                    $blnTemporaryFile = false;
+                    if ($arrSize[0] == $this->arrAvatarSize[0]
+                        && $arrSize[1] == $this->arrAvatarSize[1]
+                        && \Files::getInstance()->rename($this->varValue, $strNew)
+                    ) {
+                        $this->varValue   = $strNew;
+                        $blnTemporaryFile = false;
+                    }
                 }
             }
 
