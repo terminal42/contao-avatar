@@ -31,7 +31,7 @@ class FormAvatar extends \AvatarWidgetBase
     public function __construct($arrAttributes=null)
     {
         // Execute the AJAX actions in front end
-        if (\Environment::get('isAjaxRequest') && \Input::get('no_ajax') != 1) {
+        if (\Environment::get('isAjaxRequest') && ($arrAttributes['id'] === \Input::post('name') || $arrAttributes['name'] === \Input::post('name')) && \Input::get('no_ajax') != 1) {
             $objHandler = new \Avatar();
             $objHandler->executeAjaxActions($this->arrConfiguration);
             return;
