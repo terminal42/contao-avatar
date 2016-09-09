@@ -84,8 +84,8 @@ class AvatarWidget extends \AvatarWidgetBase
 
                 // Crop the file
                 if (\Input::post('crop') != '') {
-                    list($intPositionX, $intPositionY) = explode(',', \Input::post('crop'));
-                    $this->varValue = $this->cropImage($this->varValue, $intPositionX, $intPositionY);
+                    list($intPositionX, $intPositionY, $intSelectionWidth, $intSelectionHeight) = explode(',', \Input::post('crop'));
+                    $this->varValue = $this->cropImage($this->varValue, $intPositionX, $intPositionY, $intSelectionWidth, $intSelectionHeight);
 
                     $this->thumbnail = \Image::getHtml($this->varValue);
                     $this->imgSize = @getimagesize(TL_ROOT . '/' . $this->varValue);

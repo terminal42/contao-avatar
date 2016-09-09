@@ -146,7 +146,7 @@ jQuery.noConflict();
         var crop_api;
 
         widget.find('.thumbnail').Jcrop({
-            allowResize: false,
+            allowResize: true,
             allowSelect: false,
             setSelect: [0, 0, config.avatarSize[0], config.avatarSize[1]]
         }, function() {
@@ -163,7 +163,7 @@ jQuery.noConflict();
                     'action': 'avatar_reload',
                     'name': config.field,
                     'value': current_value,
-                    'crop': coordinates.x + ',' + coordinates.y,
+                    'crop': coordinates.x + ',' + coordinates.y + ',' + coordinates.w + ',' + coordinates.h,
                     'REQUEST_TOKEN': config.request_token
                 },
                 type: 'POST',
