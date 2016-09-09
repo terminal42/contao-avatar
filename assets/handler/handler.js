@@ -148,6 +148,8 @@ jQuery.noConflict();
         widget.find('.thumbnail').Jcrop({
             allowResize: true,
             allowSelect: false,
+            aspectRatio: config.avatarSize[0] / config.avatarSize[1],
+            minSize: [config.avatarSize[0], config.avatarSize[1]],
             setSelect: [0, 0, config.avatarSize[0], config.avatarSize[1]]
         }, function() {
             crop_api = this;
