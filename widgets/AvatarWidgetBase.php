@@ -352,7 +352,7 @@ abstract class AvatarWidgetBase extends \Widget
      * @param integer
      * @return string
      */
-    protected function cropImage($strFile, $intPositionX, $intPositionY)
+    protected function cropImage($strFile, $intPositionX, $intPositionY, $intSelectionWidth, $intSelectionHeight)
     {
         $strThumbnail = $this->getThumbnailPath($strFile);
         list($intWidth, $intHeight) = $this->getThumbnailDimensions($strFile);
@@ -410,7 +410,7 @@ abstract class AvatarWidgetBase extends \Widget
             return null;
         }
 
-        imagecopyresampled($strNewImage, $strSourceImage, 0, 0, intval($intPositionX), intval($intPositionY), $this->arrAvatarSize[0], $this->arrAvatarSize[1], $this->arrAvatarSize[0], $this->arrAvatarSize[1]);
+        imagecopyresampled($strNewImage, $strSourceImage, 0, 0, intval($intPositionX), intval($intPositionY), $this->arrAvatarSize[0], $this->arrAvatarSize[1], $intSelectionWidth, $intSelectionHeight);
 
         // Create the new image
         switch ($strExtension) {
