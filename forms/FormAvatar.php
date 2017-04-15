@@ -80,7 +80,7 @@ class FormAvatar extends \AvatarWidgetBase
                 'error'    => 0,
                 'size'     => $objFile->size,
                 'uploaded' => true,
-                'uuid'     => ($objModel !== null) ? \String::binToUuid($objFile->uuid) : ''
+                'uuid'     => ($objModel !== null) ? \StringUtil::binToUuid($objFile->uuid) : ''
             );
         }
 
