@@ -109,9 +109,12 @@ abstract class AvatarWidgetBase extends \Widget
 
         // Convert the $_FILES array to Contao format
         if (!empty($_FILES[$strTempName])) {
+            $strFileName = $_FILES[$strTempName]['name'];
+            $strFileName = str_replace(' ', '_', $strFileName);
+
             $arrFile = array
             (
-                'name' => array($_FILES[$strTempName]['name']),
+                'name' => array($strFileName),
                 'type' => array($_FILES[$strTempName]['type']),
                 'tmp_name' => array($_FILES[$strTempName]['tmp_name']),
                 'error' => array($_FILES[$strTempName]['error']),
