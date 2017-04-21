@@ -361,6 +361,10 @@ abstract class AvatarWidgetBase extends \Widget
     protected function cropImage($strFile, $intPositionX, $intPositionY, $intSelectionWidth, $intSelectionHeight)
     {
         $strThumbnail = $this->getThumbnailPath($strFile);
+        list($intWidth, $intHeight) = $this->getThumbnailDimensions($strFile);
+
+        // Resize to thumbnail size first
+        \Image::resize($strFile, $intWidth, $intHeight, 'proportional');
 
         $arrGdinfo = gd_info();
         $strGdVersion = preg_replace('/[^0-9\.]+/', '', $arrGdinfo['GD Version']);
