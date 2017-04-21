@@ -339,12 +339,14 @@ abstract class AvatarWidgetBase extends \Widget
         $arrAll = scan(TL_ROOT . '/' . $strFolder);
         $arrFiles = preg_grep('/^' . preg_quote($name, '/') . '.*\.' . preg_quote($pathinfo['extension'], '/') . '/', $arrAll);
 
-        foreach ($arrFiles as $file) {
-            if (preg_match('/__[0-9]+\.' . preg_quote($pathinfo['extension'], '/') . '$/', $file)) {
-                $file = str_replace('.' . $pathinfo['extension'], '', $file);
-                $intValue = intval(substr($file, (strrpos($file, '_') + 1)));
+        if (is_array($arrFiles)) {
+            foreach ($arrFiles as $file) {
+                if (preg_match('/__[0-9]+\.' . preg_quote($pathinfo['extension'], '/') . '$/', $file)) {
+                    $file = str_replace('.' . $pathinfo['extension'], '', $file);
+                    $intValue = intval(substr($file, (strrpos($file, '_') + 1)));
 
-                $offset = max($offset, $intValue);
+                    $offset = max($offset, $intValue);
+                }
             }
         }
 
