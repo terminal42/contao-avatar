@@ -366,7 +366,17 @@ abstract class AvatarWidgetBase extends \Widget
         list($intWidth, $intHeight) = $this->getThumbnailDimensions($strFile);
 
         // Resize to thumbnail size first
-        \Image::resize($strFile, $intWidth, $intHeight, 'proportional');
+        $strResizedFile = substr($strFile, 0, strrpos($strFile, '.')) . '-resized' . substr($strFile, strrpos($strFile, '.'));
+        $imageService = \System::getContainer()->get('contao.image.image_factory');
+        $imageService->create(
+            TL_ROOT . '/' . $strFile,
+            array(
+                $intWidth,
+                $intHeight,
+                \Contao\Image\ResizeConfigurationInterface::MODE_PROPORTIONAL
+            ),
+            TL_ROOT . '/' . $strResizedFile
+        );
 
         $arrGdinfo = gd_info();
         $strGdVersion = preg_replace('/[^0-9\.]+/', '', $arrGdinfo['GD Version']);
