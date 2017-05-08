@@ -85,7 +85,8 @@ class Avatar
         if ($strFile == '') {
             return '';
         }
-
+		$objUser = \MemberModel::findByPk($intId);
+		$alt = $objUser->firstname.' '.$objUser->lastname;
         // Gravatar
         if (stripos($strFile, 'gravatar.com') !== false) {
 
@@ -95,10 +96,10 @@ class Avatar
             }
 
             // Do not use $intHeight here as gravatar is always a square
-            return '<img src="' . $strFile . '" width="' . $intWidth . '" height="' . $intWidth . '" alt="">';
+            return '<img src="' . $strFile . '" width="' . $intWidth . '" height="' . $intWidth . '" alt="'.htmlentities($alt).'">';
         }
 
-        return \Image::getHtml($strFile);
+        return \Image::getHtml($strFile,$alt);
     }
 
     /**
@@ -165,6 +166,8 @@ class Avatar
         if ($strFile == '') {
             return '';
         }
+		$objUser = \MemberModel::findByPk($intId);
+		$alt = $objUser->firstname.' '.$objUser->lastname;
 
         // Gravatar
         if (stripos($strFile, 'gravatar.com') !== false) {
@@ -175,10 +178,10 @@ class Avatar
             }
 
             // Do not use $intHeight here as gravatar is always a square
-            return '<img src="' . $strFile . '" width="' . $intWidth . '" height="' . $intWidth . '" alt="">';
+            return '<img src="' . $strFile . '" width="' . $intWidth . '" height="' . $intWidth . '" alt="'.htmlentities($alt).'"">';
         }
 
-        return \Image::getHtml($strFile);
+        return \Image::getHtml($strFile,$alt);
     }
 
     /**
@@ -232,7 +235,6 @@ class Avatar
                 break;
             }
         }
-
         return $strReturn;
     }
 
