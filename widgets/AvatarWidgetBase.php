@@ -366,17 +366,25 @@ abstract class AvatarWidgetBase extends \Widget
         list($intWidth, $intHeight) = $this->getThumbnailDimensions($strFile);
 
         // Resize to thumbnail size first
+        $sizeConfig = new \Contao\Image\ResizeConfiguration();
+        $sizeConfig->setWidth($intWidth);
+        $sizeConfig->setHeight($intHeight);
+        $sizeConfig->setMode(\Contao\Image\ResizeConfigurationInterface::MODE_PROPORTIONAL);
+
         $strResizedFile = substr($strFile, 0, strrpos($strFile, '.')) . '-resized' . substr($strFile, strrpos($strFile, '.'));
+
         $imageService = \System::getContainer()->get('contao.image.image_factory');
         $imageService->create(
             TL_ROOT . '/' . $strFile,
-            array(
-                $intWidth,
-                $intHeight,
-                \Contao\Image\ResizeConfigurationInterface::MODE_PROPORTIONAL
-            ),
+            $sizeConfig,
             TL_ROOT . '/' . $strResizedFile
         );
+
+        $fs = new \Symfony\Component\Filesystem\Filesystem();
+        $fs->remove(TL_ROOT . '/' . $strFile);
+        $fs->copy(TL_ROOT . '/' . $strResizedFile, TL_ROOT . '/' . $strFile);
+        $fs->remove(TL_ROOT . '/' . $strResizedFile);
+        unset($strResizedFile);
 
         $arrGdinfo = gd_info();
         $strGdVersion = preg_replace('/[^0-9\.]+/', '', $arrGdinfo['GD Version']);
