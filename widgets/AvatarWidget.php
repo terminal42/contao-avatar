@@ -52,12 +52,12 @@ class AvatarWidget extends \AvatarWidgetBase
 
                 // Auto-resize the user avatar
                 if (\Config::get('avatar_user_autoresize')) {
-                    $this->varValue = \Image::get(
+                    $this->varValue = urldecode(\Image::get(
                         $this->varValue,
                         $this->arrAvatarSize[0],
                         $this->arrAvatarSize[1],
                         'center_center'
-                    );
+                    ));
 
                     // Copy the file
                     if (\Files::getInstance()->rename($this->varValue, $strNew)) {
