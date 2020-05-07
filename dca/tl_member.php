@@ -28,9 +28,9 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = array
     (
         'uploadPath' => \Avatar::getMemberPath(),
         'avatarSize' => \Avatar::getMemberSize(),
-        'thumbnailSize' => \Config::get('avatar_user_thumb'),
-        'extensions' => \Config::get('avatar_user_extensions'),
-        'maxlength' => \Config::get('avatar_user_maxlength'),
+        'thumbnailSize' => \Config::get('avatar_member_thumb'),
+        'extensions' => \Config::get('avatar_member_extensions'),
+        'maxlength' => \Config::get('avatar_member_maxlength'),
         'feEditable' => true,
         'feViewable' => true,
         'feGroup' => 'personal'
