@@ -126,6 +126,11 @@ class FormAvatar extends \AvatarWidgetBase
                         'center_center'
                     ));
 
+                    // Force creation of Image to overcome Contao's Deferred image loading function
+                    if (method_exists(\File::class, 'createIfDeferred')) {
+                        (new File($this->varValue))->createIfDeferred();
+                    }
+                    
                     // Copy the file
                     if (\Files::getInstance()->rename($this->varValue, $strNew)) {
                         $this->varValue   = $strNew;
