@@ -121,7 +121,10 @@ jQuery.noConflict();
                             'value': current_value,
                             'REQUEST_TOKEN': config.request_token
                         },
-                        type: 'POST',
+                        type: 'POST',                        
+                        beforeSend: function() {
+                            widget.find('.ajax_container').addClass('loading');
+                        },
                         complete: function(r) {
                             if (backend_mode) {
                                 AjaxRequest.hideBox();
@@ -129,7 +132,7 @@ jQuery.noConflict();
                             }
                         },
                         success: function(r) {
-                            widget.find('.ajax_container').html(r);
+                            widget.find('.ajax_container').html(r).removeClass('loading');
                             initCrop();
                             initRemove();
                         }
