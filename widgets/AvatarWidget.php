@@ -82,6 +82,9 @@ class AvatarWidget extends \AvatarWidgetBase
             // Temporary file
             if ($blnTemporaryFile) {
 
+                //Set intial path to image
+                $this->set = $this->varValue;
+
                 // Crop the file
                 if (\Input::post('crop') != '') {
                     list($intPositionX, $intPositionY, $intSelectionWidth, $intSelectionHeight) = explode(',', \Input::post('crop'));
@@ -205,6 +208,9 @@ class AvatarWidget extends \AvatarWidgetBase
      */
     protected function getUploadPath()
     {
+        if(\Input::get('do') == 'member' ) {
+            return Avatar::getMemberPath($this->getId());
+        }        
         return $this->arrConfiguration['uploadPath'];
     }
 
