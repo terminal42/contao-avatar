@@ -33,7 +33,8 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['avatar'] = array
         'maxlength' => \Config::get('avatar_member_maxlength'),
         'feEditable' => true,
         'feViewable' => true,
-        'feGroup' => 'personal'
+        'feGroup' => 'personal',
+        'decodeEntities' => true
     ),
 );
 
