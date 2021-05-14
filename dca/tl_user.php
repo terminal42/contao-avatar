@@ -31,6 +31,7 @@ $GLOBALS['TL_DCA']['tl_user']['fields']['avatar'] = array
         'thumbnailSize' => \Config::get('avatar_user_thumb'),
         'extensions' => \Config::get('avatar_user_extensions'),
         'maxlength' => \Config::get('avatar_user_maxlength'),
+        'decodeEntities' => true
     )
 );
 

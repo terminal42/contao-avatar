@@ -9,6 +9,8 @@
  * @link       http://github.com/terminal42/contao-avatar
  */
 
+use Webmozart\PathUtil\Path;
+
 abstract class AvatarWidgetBase extends \Widget
 {
 
@@ -172,12 +174,12 @@ abstract class AvatarWidgetBase extends \Widget
         if (($arrImageSize = @getimagesize(TL_ROOT . '/' . $varInput)) !== false) {
 
             // Image exceeds maximum image width
-            if ($arrImageSize[0] > $GLOBALS['TL_CONFIG']['imageWidth']) {
+            if (!empty($GLOBALS['TL_CONFIG']['imageWidth']) && $arrImageSize[0] > $GLOBALS['TL_CONFIG']['imageWidth']) {
                 $this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['filewidth'], '', $GLOBALS['TL_CONFIG']['imageWidth']));
             }
 
             // Image exceeds maximum image height
-            if ($arrImageSize[1] > $GLOBALS['TL_CONFIG']['imageHeight']) {
+            if (!empty($GLOBALS['TL_CONFIG']['imageHeight']) && $arrImageSize[1] > $GLOBALS['TL_CONFIG']['imageHeight']) {
                 $this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['fileheight'], '', $GLOBALS['TL_CONFIG']['imageHeight']));
             }
 
@@ -241,11 +243,7 @@ abstract class AvatarWidgetBase extends \Widget
      */
     protected function isTemporaryFile($strFile)
     {
-        if (stripos($strFile, $this->strThumbnailPath) !== false) {
-            return true;
-        }
-
-        return stripos($strFile, $this->strTemporaryPath) !== false;
+        return Path::isBasePath($this->strThumbnailPath, $strFile) || Path::isBasePath($this->strTemporaryPath, $strFile);
     }
 
     /**
