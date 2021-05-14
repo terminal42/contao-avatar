@@ -51,7 +51,7 @@ class Avatar
             return static::getGravatar($objMember->email, $intWidth);
         }
 
-        $strFile = static::find($intId, static::getMemberPath());
+        $strFile = static::find($intId, static::getMemberPath($intId));
 
         // Use placeholder member has no avatar
         if ($strFile == '') {
@@ -197,7 +197,7 @@ class Avatar
      */
     public static function hasMember($intId)
     {
-        return (static::find($intId, static::getMemberPath()) != '') ? true : false;
+        return (static::find($intId, static::getMemberPath($intId)) != '') ? true : false;
     }
 
     /**
@@ -240,8 +240,35 @@ class Avatar
      * Return the member path
      * @return string
      */
-    public static function getMemberPath()
+    public static function getMemberPath($intId = 0)
     {
+        //For frontend and if user is logged in
+        if (!$intId && FE_USER_LOGGED_IN === true) {
+            $intId =  \FrontendUser::getInstance()->id;
+        }
+
+        //For backend edit member 
+        if (!$intId && \Input::get('id')) {
+            $intId =  \Input::get('id');
+        }
+
+        //Find member's home dir when possible
+        $objMember = \MemberModel::findById($intId);
+        if($objMember->assignDir) {
+            $objMemberFolder = \FilesModel::findByUuid($objMember->homeDir);
+            
+            if(is_dir($objMemberFolder->path)) {
+
+                //be nice put avatar in own directory
+                if (!is_dir($objMemberFolder->path. '/avatar')) {
+                    \Files::getInstance()->mkdir($objMemberFolder->path. '/avatar');
+                }
+
+                return $objMemberFolder->path. '/avatar';
+            }
+        }
+        
+        // Fallback to default path        
         static::initFileSystem();
         return static::$strMemberPath;
     }
