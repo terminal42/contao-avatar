@@ -111,9 +111,15 @@ abstract class AvatarWidgetBase extends \Widget
 
         // Convert the $_FILES array to Contao format
         if (!empty($_FILES[$strTempName])) {
+            $strFileName = $_FILES[$strTempName]['name'];
+            $strFileName = str_replace(' ', '-', $strFileName);
+            $strFileName = str_replace('_', '-', $strFileName);
+            $lastDot = strrpos($strFileName, '.');
+            $strFileName = str_replace('.', '-', substr($strFileName, 0, $lastDot)) . substr($strFileName, $lastDot);
+
             $arrFile = array
             (
-                'name' => array($_FILES[$strTempName]['name']),
+                'name' => array($strFileName),
                 'type' => array($_FILES[$strTempName]['type']),
                 'tmp_name' => array($_FILES[$strTempName]['tmp_name']),
                 'error' => array($_FILES[$strTempName]['error']),
@@ -331,12 +337,14 @@ abstract class AvatarWidgetBase extends \Widget
         $arrAll = scan(TL_ROOT . '/' . $strFolder);
         $arrFiles = preg_grep('/^' . preg_quote($name, '/') . '.*\.' . preg_quote($pathinfo['extension'], '/') . '/', $arrAll);
 
-        foreach ($arrFiles as $file) {
-            if (preg_match('/__[0-9]+\.' . preg_quote($pathinfo['extension'], '/') . '$/', $file)) {
-                $file = str_replace('.' . $pathinfo['extension'], '', $file);
-                $intValue = intval(substr($file, (strrpos($file, '_') + 1)));
+        if (is_array($arrFiles)) {
+            foreach ($arrFiles as $file) {
+                if (preg_match('/__[0-9]+\.' . preg_quote($pathinfo['extension'], '/') . '$/', $file)) {
+                    $file = str_replace('.' . $pathinfo['extension'], '', $file);
+                    $intValue = intval(substr($file, (strrpos($file, '_') + 1)));
 
-                $offset = max($offset, $intValue);
+                    $offset = max($offset, $intValue);
+                }
             }
         }
 
@@ -356,7 +364,25 @@ abstract class AvatarWidgetBase extends \Widget
         list($intWidth, $intHeight) = $this->getThumbnailDimensions($strFile);
 
         // Resize to thumbnail size first
-        \Image::resize($strFile, $intWidth, $intHeight, 'proportional');
+        $sizeConfig = new \Contao\Image\ResizeConfiguration();
+        $sizeConfig->setWidth($intWidth);
+        $sizeConfig->setHeight($intHeight);
+        $sizeConfig->setMode(\Contao\Image\ResizeConfigurationInterface::MODE_PROPORTIONAL);
+
+        $strResizedFile = substr($strFile, 0, strrpos($strFile, '.')) . '-resized' . substr($strFile, strrpos($strFile, '.'));
+
+        $imageService = \System::getContainer()->get('contao.image.image_factory');
+        $imageService->create(
+            TL_ROOT . '/' . $strFile,
+            $sizeConfig,
+            TL_ROOT . '/' . $strResizedFile
+        );
+
+        $fs = new \Symfony\Component\Filesystem\Filesystem();
+        $fs->remove(TL_ROOT . '/' . $strFile);
+        $fs->copy(TL_ROOT . '/' . $strResizedFile, TL_ROOT . '/' . $strFile);
+        $fs->remove(TL_ROOT . '/' . $strResizedFile);
+        unset($strResizedFile);
 
         $arrGdinfo = gd_info();
         $strGdVersion = preg_replace('/[^0-9\.]+/', '', $arrGdinfo['GD Version']);
